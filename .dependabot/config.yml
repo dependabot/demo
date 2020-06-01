@@ -1,8 +1,0 @@
-version: 1
-update_configs:
-  - package_manager: "javascript"
-    directory: "/javascript"
-    update_schedule: "daily"
-  - package_manager: "ruby:bundler"
-    directory: "/ruby"
-    update_schedule: "weekly"
