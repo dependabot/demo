@@ -6,7 +6,7 @@ jobs:
   greeting:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/first-interaction@c99bd8f80bdaad224d53e5d757f898a73f0ef34f
+    - uses: actions/first-interaction@a10eefa2921d015dcb81536100e29c5f28ceb0de
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         issue-message: 'Message that will be displayed on users'' first issue'
