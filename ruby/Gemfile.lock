@@ -1,14 +1,14 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    business (1.0.0)
+    business (2.2.0)
     uk_phone_numbers (0.1.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  business (~> 1.0.0)
+  business (~> 2.2.0)
   uk_phone_numbers (~> 0.1.0)
 
 BUNDLED WITH
