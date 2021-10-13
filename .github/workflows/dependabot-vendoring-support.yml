@@ -1,0 +1,22 @@
+name: Dependabot
+
+on:
+ pull_request:
+    branches:
+    - master
+
+jobs:
+  run-npx-my-precious:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
+      - name: npx my-precious and build archived-packages
+        run: git checkout ${{ github.head_ref }}
+      - run: git remote set-url origin https://x-access-token:${{github.token}}@github.com/${{github.repository}}.git
+      - run: |
+          git config --global user.email "actions@github.com"
+          git config --global user.name "Dependabot alert"
+          npx my-precious; git add .; git commit -m 'archived package'; git push
+    
