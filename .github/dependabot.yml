@@ -13,3 +13,7 @@ updates:
     directory: "/ruby"
     schedule:
       interval: "weekly"
+  - package-ecosystem:  dokcer
+    directory: "/app"
+    schedule:
+      interval: "daily"
