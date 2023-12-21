@@ -1,9 +1,8 @@
 # Basic set up for three package managers
 
 on:
+  # Allow manual trigger 
   workflow_dispatch:
-    branches:
-      - main
 
 version: 2
 updates:
