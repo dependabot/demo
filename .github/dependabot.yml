@@ -1,15 +1,23 @@
-#check following packages
+# Basic set up for three package managers
+
 version: 2
 updates:
+
+  # Maintain dependencies for GitHub Actions
   - package-ecosystem: "github-actions"
+    # Workflow files stored in the default location of `.github/workflows`. (You don't need to specify `/.github/workflows` for `directory`. You can use `directory: "/"`.)
     directory: "/"
     schedule:
       interval: "weekly"
-  - package-ecosystem: npm
+
+  # Maintain dependencies for npm
+  - package-ecosystem: "npm"
     directory: "/javascript"
     schedule:
       interval: "weekly"
-  - package-ecosystem: bundler
+
+  # Maintain dependencies for Composer
+  - package-ecosystem: "bundler"
     directory: "/ruby"
     schedule:
       interval: "weekly"
