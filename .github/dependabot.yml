@@ -1,5 +1,7 @@
 # Basic set up for three package managers
 
+on: workflow_dispatch
+
 version: 2
 updates:
 
