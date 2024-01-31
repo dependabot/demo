@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "hot-formula-parser": "^3.0.0",
+    "hot-formula-parser": "^4.0.0",
     "lodash": "^4.17.20"
   }
 }
