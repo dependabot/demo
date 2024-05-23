@@ -11,6 +11,8 @@
 This repo contains some projects with outdated dependencies. Fork it to try out
 Dependabot :dependabot:!
 
+test from MC
+
 ### Enabling Security Updates
 
 - In your fork, click the **Settings** tab
