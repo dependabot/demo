@@ -7,21 +7,29 @@ updates:
       interval: "daily"
     branches:
       - dev
+      - dependabot/bundler/ruby/business-2.3.0/.github/dependabot.yml
+      - dependabot/bundler/ruby/uk_phone_numbers-0.1.1/.github/dependabot.yml
   - package-ecosystem: npm
     directory: "/javascript"
     schedule:
-      interval: "weekly"
+      interval: "daily"
     branches:
       - dev
+      - dependabot/bundler/ruby/business-2.3.0/.github/dependabot.yml
+      - dependabot/bundler/ruby/uk_phone_numbers-0.1.1/.github/dependabot.yml
   - package-ecosystem: bundler
     directory: "/ruby"
     schedule:
-      interval: "weekly"
+      interval: "daily"
     branches:
       - dev
+      - dependabot/bundler/ruby/business-2.3.0/.github/dependabot.yml
+      - dependabot/bundler/ruby/uk_phone_numbers-0.1.1/.github/dependabot.yml
   - package-ecosystem: pip
     directory: "/.py"
     schedule:
-      interval: "weekly"
+      interval: "daily"
     branches:
       - dev
+      - dependabot/bundler/ruby/business-2.3.0/.github/dependabot.yml
+      - dependabot/bundler/ruby/uk_phone_numbers-0.1.1/.github/dependabot.yml
