@@ -5,10 +5,12 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    ignore: 
+      - dependency-name: "*"
   - package-ecosystem: npm
     directory: "/javascript"
     schedule:
-      interval: "weekly"
+      interval: "daily"
     labels: []
     ignore: 
       - dependency-name: "*"
@@ -16,3 +18,5 @@ updates:
     directory: "/ruby"
     schedule:
       interval: "weekly"
+    ignore: 
+      - dependency-name: "*"
