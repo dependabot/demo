@@ -9,6 +9,9 @@ updates:
     directory: "/javascript"
     schedule:
       interval: "weekly"
+    labels: []
+    ignore: 
+      - dependency-name: "*"
   - package-ecosystem: bundler
     directory: "/ruby"
     schedule:
