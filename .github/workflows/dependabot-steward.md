@@ -100,7 +100,7 @@ safe-outputs:
   noop:
 strict: true
 timeout-minutes: 20
-source: carlin-dependabot-testing/gh-aw-bundle/workflows/dependabot-steward.md@aef829e324de07eb12c0430db56484f198e835db
+source: carlin-dependabot-testing/gh-aw-bundle/workflows/dependabot-steward.md@0b46aa5869cb452f4834a6f7174e2e4695ffd2dd
 ---
 
 # Dependabot Steward
