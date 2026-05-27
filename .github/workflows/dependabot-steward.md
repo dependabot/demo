@@ -93,7 +93,7 @@ safe-outputs:
     max: 3
   create-issue:
     title-prefix: "[dependabot-agent] "
-    expires: 14
+    expires: 14d
     max: 2
   upload-artifact:
     skip-archive: true
