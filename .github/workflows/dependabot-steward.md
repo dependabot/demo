@@ -233,6 +233,13 @@ When creating a PR:
 
 - Make the smallest coherent change.
 - Update manifests and lockfiles together.
+- Use the package manager that owns each lockfile. Update `yarn.lock` with Yarn only, `package-lock.json` or `npm-shrinkwrap.json` with npm only, and `pnpm-lock.yaml` with pnpm only.
+- Never regenerate a `yarn.lock` with npm or a `package-lock.json` with Yarn.
+- Preserve existing lockfile registry URL forms and lockfile format unless the dependency update itself requires a change.
+- Do not rewrite `resolved` registry URLs between `registry.yarnpkg.com` and `registry.npmjs.org`, do not strip existing integrity hash fragments, and do not bump `lockfileVersion` unless required for the dependency update.
+- Only modify lockfile entries for the package update and necessary transitive changes. Do not re-resolve unrelated lockfile entries.
+- If a directory contains multiple lockfiles, update each with its native package manager so neither lockfile is rewritten in another tool's format.
+- If a minimal secondary lockfile update would cause broad incidental churn, leave that secondary lockfile untouched and call out the follow-up in the PR body.
 - Add or update tests when behavior changes.
 - Include migration code only when the dependency’s changelog, compiler, or tests prove it is needed.
 - Do not reformat unrelated files.
@@ -243,7 +250,7 @@ When creating a PR:
 
 Run available validation commands based on ecosystem:
 
-- Node: package manager install/check, targeted tests, typecheck, lint when configured
+- Node: package manager install/check with the native tool for each lockfile, targeted tests, typecheck, lint when configured
 - Python: lock/install check, unit tests, type checks if configured
 - Go: `go test ./...` when feasible
 - Java/JVM: Gradle or Maven targeted tests
