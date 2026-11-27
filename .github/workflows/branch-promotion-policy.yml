@@ -3,14 +3,17 @@ name: Branch Promotion Policy
 on:
   pull_request_target:
     branches:
+      - develop
       - main
     types:
       - opened
       - reopened
       - synchronize
       - edited
+      - ready_for_review
 
-permissions: {}
+permissions:
+  pull-requests: write
 
 jobs:
   validate-source-branch:
@@ -21,14 +24,82 @@ jobs:
       - name: Validate source branch
         env:
           SOURCE_BRANCH: ${{ github.head_ref }}
+          TARGET_BRANCH: ${{ github.base_ref }}
           SOURCE_REPO: ${{ github.event.pull_request.head.repo.full_name }}
           TARGET_REPO: ${{ github.repository }}
 
         run: |
-          if [[ "$SOURCE_BRANCH" != "develop" || \
-                "$SOURCE_REPO" != "$TARGET_REPO" ]]; then
-            echo "::error::Only develop branch from the same repository can merge into main."
-            exit 1
+          echo "Source branch: $SOURCE_BRANCH"
+          echo "Target branch: $TARGET_BRANCH"
+
+          if [[ "$TARGET_BRANCH" == "main" ]]; then
+            if [[ "$SOURCE_BRANCH" != "develop" || \
+                  "$SOURCE_REPO" != "$TARGET_REPO" ]]; then
+
+              echo "::error::Only develop branch from the same repository can merge into main."
+              exit 1
+            fi
           fi
 
           echo "Branch promotion validation passed."
+
+      - name: Notify user in Pull Request
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const source = context.payload.pull_request.head.ref;
+            const target = context.payload.pull_request.base.ref;
+
+            const marker = '<!-- branch-promotion-policy -->';
+
+            const body = `${marker}
+            ## ❌ Branch Promotion Validation Failed
+
+            Your pull request violates the branch promotion policy.
+
+            | Configuration | Value |
+            | --- | --- |
+            | Source branch | \`${source}\` |
+            | Target branch | \`${target}\` |
+            | Allowed source for main | \`develop\` |
+
+            ### Required action
+
+            1. Create a pull request from your feature branch to \`develop\`.
+            2. Complete the review and merge into \`develop\`.
+            3. Create a pull request from \`develop\` to \`main\`.
+            4. Obtain approval from an authorized Production approver.
+
+            Direct merging from feature branches into main is prohibited.
+            `;
+
+            const comments = await github.paginate(
+              github.rest.issues.listComments,
+              {
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number
+              }
+            );
+
+            const existing = comments.find(comment =>
+              comment.user.login === 'github-actions[bot]' &&
+              comment.body.includes(marker)
+            );
+
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body: body
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: body
+              });
+            }
