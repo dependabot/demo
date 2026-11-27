@@ -1,0 +1,34 @@
+name: Branch Promotion Policy
+
+on:
+  pull_request_target:
+    branches:
+      - main
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - edited
+
+permissions: {}
+
+jobs:
+  validate-source-branch:
+    name: validate-source-branch
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Validate source branch
+        env:
+          SOURCE_BRANCH: ${{ github.head_ref }}
+          SOURCE_REPO: ${{ github.event.pull_request.head.repo.full_name }}
+          TARGET_REPO: ${{ github.repository }}
+
+        run: |
+          if [[ "$SOURCE_BRANCH" != "develop" || \
+                "$SOURCE_REPO" != "$TARGET_REPO" ]]; then
+            echo "::error::Only develop branch from the same repository can merge into main."
+            exit 1
+          fi
+
+          echo "Branch promotion validation passed."
